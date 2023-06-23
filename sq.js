@@ -1,8 +1,3 @@
-$(() => {
-    if (squadrats.routeApp) {
-        sq2kml(17, true);
-    }
-})
 
 function download(filename, text) {
     var e = document.createElement('a');
