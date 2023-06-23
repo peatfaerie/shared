@@ -71,14 +71,10 @@ function sq2kml(level, dwnld = true) {
         return (header+line+tail);
 }
 
-let cmap;
-let nodes;
-let ways;
-
 function sq2osm(level, dwnld = true) {
-    cmap = new Map();
-    nodes = "<?xml version=\"1.0\"?><osm version=\"0.6\">";
-    ways = "";
+    let cmap = new Map();
+    let nodes = "<?xml version=\"1.0\"?><osm version=\"0.6\">";
+    let ways = "";
 
     const unexplored = getUnexplored(level);
     let tc = 0;
@@ -103,21 +99,21 @@ function sq2osm(level, dwnld = true) {
         }
     }
 
+    function addNode(lat, lon, id) {
+        let k = "" + lat + lon;
+        let v = cmap.get(k);
+        if (v === undefined) {
+            cmap.set(k, id);
+            nodes += '<node id="' + id + '" visible="true" lat="' + lat + '" lon="' + lon + '"/>';
+        } else id = v;
+        ways += '<nd ref="' + id + '"/>';
+        return id;
+    }
+
     nodes += nodes + ways + '</osm>';
 
     if (dwnld)
         download('uth.osm', nodes);
     else
         return (nodes);
-}
-
-function addNode(lat, lon, id) {
-    let k = "" + lat + lon;
-    let v = cmap.get(k);
-    if (v === undefined) {
-        cmap.set(k, id);
-        nodes += '<node id="' + id + '" visible="true" lat="' + lat + '" lon="' + lon + '"/>';
-    } else id = v;
-    ways += '<nd ref="' + id + '"/>';
-    return id;
 }
