@@ -29,24 +29,24 @@ javascript: (() => {
             a = {
                 lat: ne.lat(),
                 lng: sw.lng()
-            };
-            b = {
-                lat: sw.lat(),
-                lng: ne.lng()
-            }
+            },
+                b = {
+                    lat: sw.lat(),
+                    lng: ne.lng()
+                }
         } else {
-            a = bounds.getNorthWest();
-            b = bounds.getSouthEast();
+            a = bounds.getNorthWest(),
+                b = bounds.getSouthEast();
         }
 
-        lata = MAP.CONVERSIONS.lat2squadrat(a.lat, level);
-        lona = MAP.CONVERSIONS.lon2squadrat(a.lng, level);
-        latb = MAP.CONVERSIONS.lat2squadrat(b.lat, level);
-        lonb = MAP.CONVERSIONS.lon2squadrat(b.lng, level);
+        lata = MAP.CONVERSIONS.lat2squadrat(a.lat, level),
+            lona = MAP.CONVERSIONS.lon2squadrat(a.lng, level),
+            latb = MAP.CONVERSIONS.lat2squadrat(b.lat, level),
+            lonb = MAP.CONVERSIONS.lon2squadrat(b.lng, level);
 
         for (let x = lona; x <= lonb; x++) {
             for (let y = lata; y <= latb; y++) {
-                unexplored.push(x + '-' + y);
+                unexplored.push(x+'-'+y);
             }
         }
 
@@ -54,18 +54,17 @@ javascript: (() => {
             if (!squadrats.raw[level].has(squadrat)) {
                 const [x, y] = squadrat.split('-');
 
-                line += lstart + MAP.CONVERSIONS.squadrat2lon(+x, level) + ',' + MAP.CONVERSIONS.squadrat2lat(+y, level) + ' ' +
-                    +MAP.CONVERSIONS.squadrat2lon(+x + 1, level) + ',' + MAP.CONVERSIONS.squadrat2lat(+y, level) + ' '
+                line += lstart + MAP.CONVERSIONS.squadrat2lon(+x, level) + ',' + MAP.CONVERSIONS.squadrat2lat(+y, level) + ' '+
+                    + MAP.CONVERSIONS.squadrat2lon(+x + 1, level) + ',' + MAP.CONVERSIONS.squadrat2lat(+y, level) + ' '
                     + MAP.CONVERSIONS.squadrat2lon(+x + 1, level) + ',' + MAP.CONVERSIONS.squadrat2lat(+y + 1, level) + ' ' +
-                    +MAP.CONVERSIONS.squadrat2lon(+x, level) + ',' + MAP.CONVERSIONS.squadrat2lat(+y + 1, level) + ' ' +
-                    +MAP.CONVERSIONS.squadrat2lon(+x, level) + ',' + MAP.CONVERSIONS.squadrat2lat(+y, level) + lend;
+                    + MAP.CONVERSIONS.squadrat2lon(+x, level) + ',' + MAP.CONVERSIONS.squadrat2lat(+y + 1, level) + ' ' +
+                    + MAP.CONVERSIONS.squadrat2lon(+x, level) + ',' + MAP.CONVERSIONS.squadrat2lat(+y, level) + lend;
             }
         }
 
         if (dwnld)
-            download('sq.kml', header + line + tail);
+            download('sqn.kml',header+line+tail);
         else
-            return (header + line + tail);
+            return (header+line+tail);
     }
-
 })();
